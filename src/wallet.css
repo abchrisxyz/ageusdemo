@@ -1,0 +1,12 @@
+.nav-body {
+  border-left: solid 1px;
+  border-right: solid 1px;
+  border-bottom: solid 1px;
+  /* border-color: #dee2e6 #dee2e6 #fff; */
+  border-color: #dee2e6 #dee2e6 #dee2e6;
+  margin-bottom: 1px;
+}
+
+.nav-item > button {
+  width: 100%;
+}
