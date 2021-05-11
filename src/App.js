@@ -21,7 +21,7 @@ import Box from './box';
 
 function App() {
   const [bank, setBank] = useState(initialBank())
-  const [ergPrice, setErgPrice] = useState(2.5);
+  const [ergPrice, setErgPrice] = useState(5.5);
 
   const pegRate = 1. / ergPrice;
   const pegRateInNanoERG = toNano(pegRate);
