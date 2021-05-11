@@ -78,6 +78,9 @@ function App() {
         <h6>Resources:</h6>
         <ul>
           <li>
+            <a href="https://ergonaut.space/en/SigmaUSD">ergonaut.space</a>
+          </li>
+          <li>
             <a href="https://veriumfellow.medium.com/introduction-to-ergos-sigmausd-stablecoin-risk-and-reward-mechanism-18690b52d672">
               Introduction to Ergo’s SigmaUSD stablecoin risk and reward mechanism
             </a>
