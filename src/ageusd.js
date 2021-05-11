@@ -29,7 +29,7 @@ const MAX_RESERVE_RATIO = 800; // %
 const RESERVECOIN_DEFAULT_PRICE = 1000000; // nanoERG (0.001 ERG)
 const MIN_BOX_VALUE = 10000000; // nanoERG (0.01 ERG)
 const TX_FEE = 2000000; // nanoERG (0.002 ERG)
-const FEE_PERCENT = 1; // %
+const FEE_PERCENT = 2; // %
 const IMPLEMENTOR_FEE_PERCENT = 0.25; // %
 
 export function initialBank() {

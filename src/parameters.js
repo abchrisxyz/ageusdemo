@@ -21,7 +21,7 @@ const Parameters = ({ ergPrice, setErgPrice }) => {
           />
           <div className="units">USD</div>
         </form>
-        <Prop label="Protocol fee" value="1 %" />
+        <Prop label="Protocol fee" value="2 %" />
       </div>
     </Box>
   )
