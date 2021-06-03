@@ -56,9 +56,6 @@ function App() {
 
   return (
     <div className="container pb-5">
-      <div className="mt-3 alert alert-warning" role="alert">
-        <p className="text-center">This is an unvalidated prototype - for educational purposes only.</p>
-      </div>
       <div className="mt-3 p-3 alert alert-light" role="alert">
         <p><a href="https://github.com/Emurgo/age-usd">AgeUSD</a> is an algorithmic stablecoin protocol. This demo is a simple web app to help coin holders understand how their assets can evolve under various conditions.</p>
         <p>The current version focusses on the <a href="http://sigmausd.io/">SigmaUSD</a> implementation, part of the <a href="https://ergoplatform.org/en/">Ergo</a> ecosystem.</p>
