@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import NumberFormat from 'react-number-format';
 
 import Box from './box';
 import Prop from './prop';
@@ -15,19 +16,21 @@ const Exchange = ({ coin, mint }) => {
   const disabled = nbOfCoins <= 0;
 
   return (
-    <div className="d-flex justify-content-center p-3">
-      <form>
-        <input
-          type="number"
-          className="form-control"
-          min="0"
-          value={nbOfCoins}
-          onChange={(e) => setNbOfCoins(Number(e.target.value))}
-        />
-      </form>
+    <div className="d-flex flex-column flex-sm-row justify-content-center p-3">
+      <NumberFormat
+        className="p-1"
+        value={nbOfCoins > 0 ? nbOfCoins : null}
+        thousandSeparator={true}
+        allowNegative={false}
+        suffix={" " + coin}
+        onValueChange = {(values) => {
+         const {value} = values;
+         setNbOfCoins(Number(value));
+        }}
+      />
       <button
         type="button"
-        className="btn btn-outline-primary ml-3"
+        className="btn btn-sm btn-outline-primary ms-sm-3 mt-3 mt-sm-0"
         disabled={disabled}
         onClick={(e) => mint(nbOfCoins)}
       >Mint {coin}
