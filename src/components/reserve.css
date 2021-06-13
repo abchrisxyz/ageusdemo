@@ -1,0 +1,32 @@
+.reserve-container {
+	/*background-color: white;*/
+	border: solid 1px;
+	padding: 0px;
+	max-width: 900px;
+}
+.reserve {
+	padding: 30px 5px;
+}
+.sigusd {
+	background-color:  #5DB7DE;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+}
+.fees {
+	background-color: #BCE784;
+
+}
+.sigrsv {
+	background-color:  #5DD39E;
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+.prc{
+	/*color:  white;*/
+	/*position: relative;
+	left: 10%;
+	transform: translateX(-10%);
+	width: auto;*/
+	text-align: center;
+	z-index: 10;
+}

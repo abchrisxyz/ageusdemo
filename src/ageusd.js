@@ -24,6 +24,8 @@ const bank = {
 	baseReserves: 0 * 10 ** 9, // nanoERGs
 }
 
+const TOTAL_SIGUSD_TOKENS = 100000000000.01
+const TOTAL_SIGRSV_TOKENS = 10000000000001
 const MIN_RESERVE_RATIO = 400; // %
 const MAX_RESERVE_RATIO = 800; // %
 const RESERVECOIN_DEFAULT_PRICE = 1000000; // nanoERG (0.001 ERG)
@@ -34,6 +36,21 @@ const IMPLEMENTOR_FEE_PERCENT = 0.25; // %
 
 export function initialBank() {
 	return Object.create(bank);
+}
+
+/*
+ * Create bank object from:
+ *
+ * usdBalance: remaining SigUSD tokens in bank
+ * rsvBalance: remaining SigRSV tokens in bank
+ * baseReserves: total amount of nanoERGs in bank
+ */
+export function createBank(usdBalance, rsvBalance, baseReserves) {
+	const newBank = Object.create(bank);
+	newBank.scCirc = TOTAL_SIGUSD_TOKENS - usdBalance;
+	newBank.rcCirc = TOTAL_SIGRSV_TOKENS - rsvBalance;
+	newBank.baseReserves = baseReserves;
+	return newBank;
 }
 
 /*
