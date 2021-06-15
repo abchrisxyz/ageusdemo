@@ -134,7 +134,15 @@ const Calculator = ({show}) => {
           <Parameters ergPrice={ergPrice} setErgPrice={setErgPrice} />
         </div>
       </div>
-      <Wallet scRate={fromNano(scRate)} rcRate={fromNano(rcRate)} buySC={buySC} buyRC={buyRC} />
+      <Wallet
+        scRate={fromNano(scRate)}
+        rcRate={fromNano(rcRate)}
+        buySC={buySC}
+        buyRC={buyRC}
+        mintableSC={mintableSC}
+        mintableRC={mintableRC}
+        redeemableRC={redeemableRC}
+      />
     </div>
   );
 }

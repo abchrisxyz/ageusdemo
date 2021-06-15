@@ -10,10 +10,12 @@ const formatErg = (erg) => {
   return Number(erg.toFixed(2)).toLocaleString('en')
 }
 
-const Exchange = ({ coin, mint }) => {
+const Exchange = ({ coin, mint, mintableAmount }) => {
   const [nbOfCoins, setNbOfCoins] = useState(0);
 
   const disabled = nbOfCoins <= 0;
+
+  const mintLimit = ({ floatValue }) => floatValue <= mintableAmount;
 
   return (
     <div className="d-flex flex-column flex-sm-row justify-content-center p-3">
@@ -23,6 +25,7 @@ const Exchange = ({ coin, mint }) => {
         thousandSeparator={true}
         allowNegative={false}
         suffix={" " + coin}
+        isAllowed={mintLimit}
         onValueChange = {(values) => {
          const {value} = values;
          setNbOfCoins(Number(value));
@@ -39,7 +42,7 @@ const Exchange = ({ coin, mint }) => {
   )
 }
 
-const Wallet = ({ scRate, rcRate, buySC, buyRC }) => {
+const Wallet = ({ scRate, rcRate, buySC, buyRC, mintableSC, mintableRC, redeemableRC }) => {
   const [scBalance, setSCBalance] = useState(0);
   const [rcBalance, setRCBalance] = useState(0);
   const [spentErg, setSpentErg] = useState(0);
@@ -61,6 +64,10 @@ const Wallet = ({ scRate, rcRate, buySC, buyRC }) => {
   const scBalanceInErg = scBalance * scRate;
   const rcBalanceInErg = rcBalance * rcRate;
 
+  const rcRedeemableBalance = Math.min(rcBalance, redeemableRC);
+  // TODO: Don't use hard coded fees here
+  const redeemableBalanceInErgAfterFees = (scBalanceInErg + rcRedeemableBalance * rcRate) * (1 - 0.0225)
+
   return (
     <Box>
       <div className="container">
@@ -78,13 +85,13 @@ const Wallet = ({ scRate, rcRate, buySC, buyRC }) => {
             <Prop label="Spent ERG" value={formatErg(spentErg) + " ERG"} />
           </div>
           <div className="col">
-            <Prop label="Redeemable ERG" value={"Todo..."} />
+            <Prop label="Redeemable ERG (after fees)" value={redeemableBalanceInErgAfterFees.toLocaleString('en')} />
           </div>
         </div>
         {/* <hr></hr> */}
         <ul className="nav nav-tabs nav-fill pt-3">
           <li className="nav-item">
-            <button className={`nav-link ${mode === 'SC' ? "active" : ""}`} onClick={() => setMode('SC')}> SigUSD</button>
+            <button className={`nav-link ${mode === 'SC' ? "active" : ""}`} onClick={() => setMode('SC')}>SigUSD</button>
           </li>
           <li className="nav-item">
             <button className={`nav-link ${mode === 'RC' ? "active" : ""}`} onClick={() => setMode('RC')}>SigRSV</button>
@@ -92,10 +99,10 @@ const Wallet = ({ scRate, rcRate, buySC, buyRC }) => {
         </ul>
         <div className="nav-body">
           <div hidden={mode !== 'SC'}>
-            <Exchange coin={"SigUSD"} mint={onBuySC} />
+            <Exchange coin={"SigUSD"} mint={onBuySC} mintableAmount={mintableSC} />
           </div>
           <div hidden={mode !== 'RC'}>
-            <Exchange coin={"SigRSV"} mint={onBuyRC} />
+            <Exchange coin={"SigRSV"} mint={onBuyRC} mintableAmount={mintableRC}/>
           </div>
         </div>
       </div>
