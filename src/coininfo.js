@@ -9,8 +9,9 @@ function formatStepAmount(amount) {
     : `${amount / 1000}k`
 }
 
-const CoinButtons = ({ minted, increase, decrease, steps }) => {
+const CoinButtons = ({ minted, increase, decrease, steps, mintable, redeemable }) => {
   const [selectedStep, setSelectedStep] = useState(steps[1]);
+
 
   const stepButtons = steps.map((step) => {
     const className = step === selectedStep
@@ -27,7 +28,8 @@ const CoinButtons = ({ minted, increase, decrease, steps }) => {
     )
   });
 
-  const disableDecreaseButton = selectedStep > minted;
+  const disableDecreaseButton = selectedStep > redeemable;
+  const disableIncreaseButton = selectedStep > mintable;
 
   return (
     <div className="d-flex justify-content-center">
@@ -43,6 +45,7 @@ const CoinButtons = ({ minted, increase, decrease, steps }) => {
       <button
         type="button"
         className="btn btn-sm btn-outline-primary ml-3"
+        disabled={disableIncreaseButton}
         onClick={() => increase(selectedStep)}
       >+</button>
     </div>
@@ -62,7 +65,14 @@ const CoinInfo = ({ name, minted, mintable, redeemable, price, increase, decreas
         </div>
       </div>
       <hr></hr>
-      <CoinButtons minted={minted} increase={increase} decrease={decrease} steps={steps} />
+      <CoinButtons
+        minted={minted}
+        increase={increase}
+        decrease={decrease}
+        steps={steps}
+        mintable={mintable}
+        redeemable={redeemable}
+      />
     </Box>
   );
 }
