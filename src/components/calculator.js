@@ -24,7 +24,7 @@ import {
 
 const Calculator = ({show}) => {
   const [bank, setBank] = useState(initialBank())
-  const [ergPrice, setErgPrice] = useState(5.5);
+  const [ergPrice, setErgPrice] = useState(10);
 
   useEffect(() => {
     async function fetchData() {
