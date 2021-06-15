@@ -49,13 +49,17 @@ const CoinButtons = ({ minted, increase, decrease, steps }) => {
   );
 }
 
-const CoinInfo = ({ name, minted, price, increase, decrease, steps }) => {
+const CoinInfo = ({ name, minted, mintable, redeemable, price, increase, decrease, steps }) => {
   return (
     <Box>
       <div className="container">
         <div className="text-muted mb-3">{name}</div>
         <Prop label="Circulating Supply" value={minted.toLocaleString('en')} />
         <Prop label="Price" value={`${price} ERG`} />
+        <div className="d-flex justify-content-between">
+          <Prop mini={true} label="Redeemable" value={redeemable.toLocaleString('en')} />
+          <Prop mini={true} label="Mintable" value={mintable.toLocaleString('en')} />
+        </div>
       </div>
       <hr></hr>
       <CoinButtons minted={minted} increase={increase} decrease={decrease} steps={steps} />

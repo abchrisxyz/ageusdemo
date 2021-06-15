@@ -177,6 +177,70 @@ function _totalAmountToRedeem(baseAmount) {
 
 
 /*
+ * Amount of stable coin that can be minted whilst satisfying RR constraints.
+ *
+ * baseReserves: total amount in reserves [nanoERG]
+ * scCirc: number of stable coins in circulation [-]
+ * pegRate: current ERG/USD price [nanoERG]
+ */
+function _mintableSC(baseReserves, scCirc, pegRate) {
+	const msc = (baseReserves - MIN_RESERVE_RATIO / 100 * pegRate * scCirc) / (pegRate * (MIN_RESERVE_RATIO / 100 - (1 + FEE_PERCENT / 100)));
+	return Math.max(0, msc);
+}
+
+/*
+ * Amount of reserve coin that can be redeemed whilst satisfying RR constraints.
+ *
+ * baseReserves: total amount in reserves [nanoERG]
+ * scCirc: number of stable coins in circulation [-]
+ * rcCirc: number of reserve coins in circulation [-]
+ * pegRate: current ERG/USD price [nanoERG]
+ */
+function _redeemableRC(baseReserves, scCirc, rcCirc, pegRate) {
+	const equity = _equity(baseReserves, scCirc, pegRate);
+	const rcRate = _rcRate(rcCirc, equity)
+	const rsc = (baseReserves - MIN_RESERVE_RATIO / 100 * pegRate * scCirc) / (rcRate * 0.98);
+	return Math.round(Math.max(0, rsc));
+}
+
+function _rrAfterMintingRC(baseReserves, scCirc, rcCirc, pegRate, nbToMint) {
+	const equity = _equity(baseReserves, scCirc, pegRate);
+	const rcRate = _rcRate(rcCirc, equity)
+	var newBaseReserves = baseReserves + _baseCostToMint(rcRate, nbToMint);
+    return _reserveRatio(newBaseReserves, scCirc, pegRate);
+}
+
+/*
+ * Amount of reserve coin that can be redeemed whilst satisfying RR constraints.
+ *
+ * baseReserves: total amount in reserves [nanoERG]
+ * scCirc: number of stable coins in circulation [-]
+ * rcCirc: number of reserve coins in circulation [-]
+ * pegRate: current ERG/USD price [nanoERG]
+ */
+function _mintableRC(baseReserves, scCirc, rcCirc, pegRate) {
+	let low = 0;
+	let high = TOTAL_SIGRSV_TOKENS;
+	while (low <= high) {
+		var mid = ((high -low) / 2) + low;
+		const new_rr = _rrAfterMintingRC(baseReserves, scCirc, rcCirc, pegRate, mid);
+
+		if (new_rr === MAX_RESERVE_RATIO) {
+			return mid;
+		}
+
+		if (new_rr > MAX_RESERVE_RATIO) {
+			high = mid - 1;
+		}
+
+		if (new_rr < MAX_RESERVE_RATIO) {
+			low = mid + 1;
+		}
+	}
+	return Math.round(low);
+}
+
+/*
  * Buy Stable Coin with ERG
  *
  * scToMint: Number of stable coins to mint [-]
@@ -190,7 +254,6 @@ export function mintSC(bank, pegRate, scToMint) {
 	newBank.baseReserves += baseCost;
 	return [newBank, totalCost];
 }
-
 
 /*
 * Sell Stable Coin for ERG
@@ -258,4 +321,16 @@ export function calcRCRate(bank, pegRateInNanoERG) {
 
 export function calcReserveRatio(bank, pegRateInNanoERG) {
 	return _reserveRatio(bank.baseReserves, bank.scCirc, pegRateInNanoERG)
+}
+
+export function calcMintableSC(bank, pegRateInNanoERG) {
+	return _mintableSC(bank.baseReserves, bank.scCirc, pegRateInNanoERG);
+}
+
+export function calcRedeemableRC(bank, pegRateInNanoERG) {
+	return _redeemableRC(bank.baseReserves, bank.scCirc, bank.rcCirc, pegRateInNanoERG);
+}
+
+export function calcMintableRC(bank, pegRateInNanoERG) {
+	return _mintableRC(bank.baseReserves, bank.scCirc, bank.rcCirc, pegRateInNanoERG);
 }

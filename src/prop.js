@@ -1,8 +1,8 @@
 import './prop.css';
 
-const Prop = ({ label, value }) => {
+const Prop = ({ label, value, mini=false }) => {
   return (
-    <div className="prop">
+    <div className={"prop" + (mini ? " mini" : "")}>
       <div className="prop-label">{label}</div>
       <div className="prop-value">{value}</div>
     </div>

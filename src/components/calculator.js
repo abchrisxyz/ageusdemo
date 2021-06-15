@@ -15,7 +15,10 @@ import {
   mintRC,
   redeemSC,
   redeemRC,
-  calcReserveRatio
+  calcReserveRatio,
+  calcMintableSC,
+  calcMintableRC,
+  calcRedeemableRC,
 } from '../ageusd';
 
 
@@ -53,6 +56,9 @@ const Calculator = ({show}) => {
   const reserveRatio = calcReserveRatio(bank, pegRateInNanoERG);
   const scRate = calcSCRate(bank, pegRateInNanoERG);
   const rcRate = calcRCRate(bank, pegRateInNanoERG);
+  const mintableSC = calcMintableSC(bank, pegRateInNanoERG);
+  const mintableRC = calcMintableRC(bank, pegRateInNanoERG);
+  const redeemableRC = calcRedeemableRC(bank, pegRateInNanoERG);
 
   const buySC = (nbOfCoins) => {
     const [newBank, CostNanoERG] = mintSC(bank, pegRateInNanoERG, nbOfCoins);
@@ -99,6 +105,8 @@ const Calculator = ({show}) => {
           <CoinInfo
             name="SigUSD"
             minted={bank.scCirc}
+            mintable={mintableSC}
+            redeemable={bank.scCirc}
             price={fromNano(scRate).toFixed(2)}
             increase={buySC}
             decrease={sellSC}
@@ -109,6 +117,8 @@ const Calculator = ({show}) => {
           <CoinInfo
             name="SigRSV"
             minted={bank.rcCirc}
+            mintable={mintableRC}
+            redeemable={redeemableRC}
             price={fromNano(rcRate).toFixed(8)}
             increase={buyRC}
             decrease={sellRC}
