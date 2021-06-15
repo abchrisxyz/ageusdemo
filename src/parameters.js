@@ -27,7 +27,10 @@ const Parameters = ({ ergPrice, setErgPrice }) => {
             }}
           />
         </form>
-        <Prop label="Protocol fee" value="2 %" />
+        <div className="d-flex justify-content-between">
+          <Prop label="Protocol fee" value="2 %" />
+          <Prop label="UI fee" value="0.25 %" />
+        </div>
       </div>
     </Box>
   )
