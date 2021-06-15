@@ -14,6 +14,7 @@ const Parameters = ({ ergPrice, setErgPrice }) => {
           <label>ERG Price</label>
           <NumberFormat
             style={{maxWidth: '6rem'}}
+            className="py-1"
             value={ergPrice}
             thousandSeparator={true}
             allowNegative={false}
