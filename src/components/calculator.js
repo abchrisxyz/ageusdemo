@@ -94,11 +94,6 @@ const Calculator = ({show}) => {
           <li>Mint stable or reserve coins in the <i>My Wallet</i> section.</li>
           <li>Simulate external events by increasing/decreasing the supplies of SigUSD and SigRSV and/or changing the ERG price.</li>
         </ol>
-        <h6>To be implemented:</h6>
-        <ul>
-          <li>Enforce reserve ratio constraints</li>
-          <li>Show redeemable ERG amount</li>
-        </ul>
       </div>
       <div className="row row-cols-1 row-cols-md-2">
         <div className="col">
@@ -143,7 +138,13 @@ const Calculator = ({show}) => {
         mintableRC={mintableRC}
         redeemableRC={redeemableRC}
       />
+      <div className="mt-3 p-3 alert alert-light" role="alert">
+        The value of SigRSV can fluctuate depending on ERG price, transaction volumes, as well as how and when SigUSD holders redeem their value.
+        None of these events are predictable and their implications on the AgeUSD protocol can be hard to grasp when starting out.
+        This calculator lets one play around to see how SigUSD and SigRSV value is affected.
+      </div>
     </div>
+
   );
 }
 
