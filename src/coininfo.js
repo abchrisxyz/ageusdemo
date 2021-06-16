@@ -61,7 +61,7 @@ const CoinInfo = ({ name, minted, mintable, redeemable, price, increase, decreas
         <Prop label="Price" value={`${price} ERG`} />
         <div className="d-flex justify-content-between">
           <Prop mini={true} label="Redeemable" value={redeemable.toLocaleString('en')} />
-          <Prop mini={true} label="Mintable" value={mintable.toLocaleString('en')} />
+          <Prop mini={true} label="Mintable" value={Number(mintable.toFixed(2)).toLocaleString('en')} />
         </div>
       </div>
       <hr></hr>
