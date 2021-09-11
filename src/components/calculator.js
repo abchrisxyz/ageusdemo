@@ -22,7 +22,7 @@ import {
 } from '../ageusd';
 
 
-const Calculator = ({show}) => {
+const Calculator = () => {
   const [bank, setBank] = useState(initialBank())
   const [ergPrice, setErgPrice] = useState(10);
 
@@ -83,8 +83,6 @@ const Calculator = ({show}) => {
     setBank(newBank);
     return fromNano(AmountNanoERG);
   }
-
-  if (!show) return "";
 
   return (
     <div>
