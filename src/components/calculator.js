@@ -89,7 +89,7 @@ const Calculator = () => {
       <div className="mt-3 p-3 alert alert-light" role="alert">
         <h6>Usage:</h6>
         <ol>
-          <li>Mint stable or reserve coins in the <i>My Wallet</i> section.</li>
+          <li>Mint stable or reserve coins in the <i>My Wallet</i> section or edit your wallet balance to represent existing assets without changing the current bank state.</li>
           <li>Simulate external events by increasing/decreasing the supplies of SigUSD and SigRSV and/or changing the ERG price.</li>
         </ol>
       </div>
@@ -135,6 +135,8 @@ const Calculator = () => {
         mintableSC={mintableSC}
         mintableRC={mintableRC}
         redeemableRC={redeemableRC}
+        scCirc={bank.scCirc}
+        rcCirc={bank.rcCirc}
       />
       <div className="mt-3 p-3 alert alert-light" role="alert">
         The value of SigRSV can fluctuate depending on ERG price, transaction volumes, as well as how and when SigUSD holders redeem their value.
