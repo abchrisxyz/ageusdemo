@@ -1,0 +1,23 @@
+name: Manual deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16.x
+    
+    - name: Build
+      run: |
+        npm install
+        npm run build
+      
+    - name: List files
+      run: ls -la
