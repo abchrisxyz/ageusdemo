@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  sync:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -14,10 +14,22 @@ jobs:
       with:
         node-version: 16.x
     
-    - name: Build
-      run: |
-        npm install
-        npm run build
+    # - name: Build
+    #   run: |
+    #     npm install
+    #     npm run build
       
     - name: List files
       run: ls -la
+
+    - name: Sync
+      uses: burnett01/rsync-deployments@5.2
+      with:
+        switches: -avzr --delete
+        path: public/
+        remote_path: ${{ secrets.DEPLOY_PATH }}
+        remote_host: ${{ secrets.DEPLOY_HOST }}
+        remote_port: ${{ secrets.DEPLOY_PORT }}
+        remote_user: ${{ secrets.DEPLOY_USER }}
+        remote_key: ${{ secrets.DEPLOY_KEY }}
+        remote_key_pass: ${{ secrets.DEPLOY_KEY_PASS }}
